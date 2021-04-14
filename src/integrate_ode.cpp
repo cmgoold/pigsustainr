@@ -12,6 +12,12 @@
 #include <string>
 #include <memory>
 
+//' Integrates a PigSustainR model
+//' @param model_type A string for the model type to integrate
+//' @param times A vector of integration time steps
+//' @param inits A vector of initial values of the state variables
+//' @param parameters A vector of parameters
+//' @return A dataframe of state variable solutions
 //[[Rcpp::export]]
 Rcpp::DataFrame integrate_ode(
   std::string& model_type,
