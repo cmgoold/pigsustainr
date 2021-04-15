@@ -2,22 +2,22 @@
 % Please edit documentation in R/RcppExports.R
 \name{integrate_ode}
 \alias{integrate_ode}
-\title{Integrates a PigSustainR model}
+\title{Integrates a \pkg{pigsustainr} model using C++}
 \usage{
-integrate_ode(model_type, times, inits, parameters, dt)
+integrate_ode(model_name, initial_values, parameters, times)
 }
 \arguments{
-\item{model_type}{A string for the model type to integrate}
+\item{parameters}{A vector of parameters}
 
 \item{times}{A vector of integration time steps}
 
-\item{inits}{A vector of initial values of the state variables}
+\item{model_type}{A string for the model type to integrate}
 
-\item{parameters}{A vector of parameters}
+\item{inits}{A vector of initial values of the state variables}
 }
 \value{
 A dataframe of state variable solutions
 }
 \description{
-Integrates a PigSustainR model
+Integrates a \pkg{pigsustainr} model using C++
 }

@@ -6,23 +6,22 @@
 using namespace Rcpp;
 
 // integrate_ode
-Rcpp::DataFrame integrate_ode(std::string& model_type, const std::vector<double>& times, const std::vector<double>& inits, const std::vector<double>& parameters, const double& dt);
-RcppExport SEXP _pigsustainr_integrate_ode(SEXP model_typeSEXP, SEXP timesSEXP, SEXP initsSEXP, SEXP parametersSEXP, SEXP dtSEXP) {
+Rcpp::DataFrame integrate_ode(std::string& model_name, const std::vector<double>& initial_values, const std::vector<double>& parameters, const std::vector<double>& times);
+RcppExport SEXP _pigsustainr_integrate_ode(SEXP model_nameSEXP, SEXP initial_valuesSEXP, SEXP parametersSEXP, SEXP timesSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< std::string& >::type model_type(model_typeSEXP);
-    Rcpp::traits::input_parameter< const std::vector<double>& >::type times(timesSEXP);
-    Rcpp::traits::input_parameter< const std::vector<double>& >::type inits(initsSEXP);
+    Rcpp::traits::input_parameter< std::string& >::type model_name(model_nameSEXP);
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type initial_values(initial_valuesSEXP);
     Rcpp::traits::input_parameter< const std::vector<double>& >::type parameters(parametersSEXP);
-    Rcpp::traits::input_parameter< const double& >::type dt(dtSEXP);
-    rcpp_result_gen = Rcpp::wrap(integrate_ode(model_type, times, inits, parameters, dt));
+    Rcpp::traits::input_parameter< const std::vector<double>& >::type times(timesSEXP);
+    rcpp_result_gen = Rcpp::wrap(integrate_ode(model_name, initial_values, parameters, times));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_pigsustainr_integrate_ode", (DL_FUNC) &_pigsustainr_integrate_ode, 5},
+    {"_pigsustainr_integrate_ode", (DL_FUNC) &_pigsustainr_integrate_ode, 4},
     {NULL, NULL, 0}
 };
 

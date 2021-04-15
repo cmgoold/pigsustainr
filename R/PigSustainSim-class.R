@@ -17,7 +17,29 @@
 setClass("PigSustainSim",
   slots = c(
     model = "character",
-    results = "matrix",
-    parameters = "numeric"
+    backend = "character",
+    results = "data.frame",
+    parameters = "numeric",
+    dt = "numeric"
   )
 )
+
+#' Retrieve the simulation results from a
+#' PigSustainSim class instance.
+#'@export
+setMethod("summary", "PigSustainSim", function(object){
+    cat(paste0(
+      "Summary of PigSustainSim simulation of ", object@model, " ran using ",
+      object@backend)
+      )
+    head(slot(object, "results"), 10)
+  }
+)
+
+setGeneric("results", function(object){
+  slot(object, "results")
+})
+
+# setMethod("results", "PigSustainSim", function(object){
+#   slot(object, "results")
+# })

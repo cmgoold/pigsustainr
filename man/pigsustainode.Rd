@@ -4,12 +4,14 @@
 \alias{pigsustainode}
 \title{A function to fit \pkg{pigsustainr} ODE models}
 \usage{
-pigsustainode(model_name, initial_values, times, backend)
+pigsustainode(model_name, initial_values, parameters, times, backend)
 }
 \arguments{
 \item{model_name}{The name of the model to simulate}
 
 \item{initial_values}{Initial values of the state variables}
+
+\item{parameters}{Vector of parameter values for the model}
 
 \item{times}{The simulation time steps. Should increment by the desired
 dt interval}
@@ -21,7 +23,7 @@ An object of class of \code{PigSustainSim}
 }
 \description{
 Fit \pkg{pigsustainr} ODE (ordinary differential equation) models, using
-either the 'deSolve' R package or the C++.
+either the 'deSolve' R package or C++.
 }
 \author{
 Conor Goold \email{conor.goold@gmail.com}
