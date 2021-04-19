@@ -11,3 +11,4 @@ Description: This R package implements a number of dynamic systems models (mostl
 License: GPL (>= 2)
 Imports: Rcpp (>= 1.0.6)
 LinkingTo: Rcpp
+RoxygenNote: 7.1.1
