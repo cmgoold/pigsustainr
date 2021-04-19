@@ -16,7 +16,7 @@
 
     return(list(c(
 
-      dC_dt <- a * C * (P/b - 1) - e * C,
+      dS_dt <- a * C * (P/b - 1) - e * C,
 
       dI_dt <- f*g*C - w*I - I/(D*s + I)*D + k*(h - f*g*C),
 

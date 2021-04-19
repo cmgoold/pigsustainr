@@ -19,9 +19,7 @@ pigsustainode <- function(
   ){
 
     # validate the inputs
-    validate_pigsustainode_data(
-      model_name, initial_values
-    )
+    validate_pigsustainode_data(model_name, initial_values, parameters)
 
     # get the dt interval
     dt <- times[2] - times[1]
@@ -50,6 +48,8 @@ pigsustainode <- function(
         times = times,
         method = "rk4"
       ))
+
+      names(sim)[1] = "times"
     }
 
     results <- new("PigSustainSim",

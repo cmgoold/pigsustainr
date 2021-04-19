@@ -39,3 +39,22 @@ setMethod("summary", "PigSustainSim", function(object){
 setGeneric("results", function(object){
   slot(object, "results")
 })
+
+setGeneric("parameters", function(object){
+  slot(object, "parameters")
+})
+
+setGeneric("stateplot", function(object, ...){})
+
+setMethod("stateplot", "PigSustainSim", function(object, ...){
+  res <- slot(object, "results")
+  res %>%
+  pivot_longer(
+    -times,
+    names_to = "state",
+    values_to = "solution"
+  ) %>%
+  ggplot2::ggplot() +
+  ggplot2::geom_line(ggplot2::aes(times, solution)) +
+  ggplot2::facet_wrap(~state, scales="free_y")
+})

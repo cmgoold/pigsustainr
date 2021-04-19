@@ -35,7 +35,7 @@ std::vector<double> BaseModel::derivatives(const std::vector<double>& states) {
 
  derivatives_.clear();
 
- derivatives_.push_back(a*S - (P/b - 1) - e*S);
+ derivatives_.push_back(a*S*(P/b - 1) - e*S);
  derivatives_.push_back(f*g*S - w*I - D*I / (D*s + I) + k*(h - f*g*S));
  derivatives_.push_back(m*(h*q/P - D));
  derivatives_.push_back(r*P*(s*D/I - 1));

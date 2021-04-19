@@ -9,13 +9,10 @@ Description: This R package implements a number of dynamic systems models (mostl
 	investigate the sustainability of pig industries. The main inspiration is work conducted
 	at the University of Leeds on the UK pig industry.
 License: GPL (>= 2)
-Imports: Rcpp (>= 1.0.6), deSolve (>= 1.28), methods
+Imports: Rcpp (>= 1.0.6), deSolve (>= 1.28), methods, ggplot2
 LinkingTo: Rcpp
 RoxygenNote: 7.1.1
-<<<<<<< HEAD
-=======
 Encoding: UTF-8
 Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
->>>>>>> main
