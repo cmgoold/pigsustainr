@@ -5,10 +5,17 @@ Version: 1.0
 Date: 2021-04-14
 Author: Conor Goold
 Maintainer: Conor Goold <goold.conor@email.com>
-Description: This R package implements a number of dynamic systems models (mostly ODE models) to 
+Description: This R package implements a number of dynamic systems models (mostly ODE models) to
 	investigate the sustainability of pig industries. The main inspiration is work conducted
-	at the University of Leeds on the UK pig industry. 
+	at the University of Leeds on the UK pig industry.
 License: GPL (>= 2)
-Imports: Rcpp (>= 1.0.6)
+Imports: Rcpp (>= 1.0.6), deSolve (>= 1.28), methods
 LinkingTo: Rcpp
 RoxygenNote: 7.1.1
+<<<<<<< HEAD
+=======
+Encoding: UTF-8
+Suggests:
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+>>>>>>> main
