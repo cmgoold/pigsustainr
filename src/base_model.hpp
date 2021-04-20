@@ -16,18 +16,18 @@ class BaseModel : public Model {
 
     // member variables
     private:
-      double a;
-      double b;
-      double e;
-      double f;
-      double g;
-      double w;
-      double s;
-      double k;
-      double h;
-      double m;
-      double q;
-      double r;
+      double sow_replacement_rate;
+      double cost_of_production;
+      double sow_removal_rate;
+      double slaughter_rate;
+      double meat_per_pig;
+      double waste_rate;
+      double ref_coverage;
+      double trade_proportion;
+      double ref_demand;
+      double demand_change_rate;
+      double willingness_to_pay;
+      double price_change_rate;
 
     // member functions
     private:

@@ -53,5 +53,16 @@ ode_model_types <- c("LogisticGrowth", "BaseModel")
   }
 }
 
+get_model_parameters <- function(model_name){
+  if(tolower(model_name=="logisticgrowth"))
+    return(logistic_parameter_names)
+  if(tolower(model_name=="base_model_parameter_names"))
+    return(base_model_parameter_names)
+}
+
 logistic_parameter_names <- c("r", "k")
-base_model_parameter_names <- c("a", "b","e", "f", "g", "w", "s", "k", "h", "m", "q", "r")
+base_model_parameter_names <- c(
+  "sow_replacement_rate", "cost_of_production", "sow_removal_rate",
+  "slaughter_rate", "meat_per_pig", "waste_rate", "ref_coverage",
+  "trade_proportion", "ref_demand", "demand_change_rate", "willingness_to_pay",
+  "price_change_rate")

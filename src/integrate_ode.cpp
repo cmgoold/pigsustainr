@@ -50,7 +50,7 @@ Rcpp::DataFrame integrate_ode(
 
    if(model_name=="BaseModel"){
      model = std::make_unique<BaseModel>(parameters);
-     colnames(out) = Rcpp::CharacterVector::create("times", "S", "I", "D", "P");
+     colnames(out) = Rcpp::CharacterVector::create("times", "Sows", "Pork", "Demand", "Price");
    }
 
    // integration instance initialised

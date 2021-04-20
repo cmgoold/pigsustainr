@@ -12,33 +12,35 @@ BaseModel::BaseModel(const std::vector<double>& parameters) : Model(parameters) 
 }
 
 void BaseModel::resolve_parameters(){
-  a = parameters_[0];
-  b = parameters_[1];
-  e = parameters_[2];
-  f = parameters_[3];
-  g = parameters_[4];
-  w = parameters_[5];
-  s = parameters_[6];
-  k = parameters_[7];
-  h = parameters_[8];
-  m = parameters_[9];
-  q = parameters_[10];
-  r = parameters_[11];
+  sow_replacement_rate = parameters_[0];
+  cost_of_production = parameters_[1];
+  sow_removal_rate = parameters_[2];
+  slaughter_rate = parameters_[3];
+  meat_per_pig = parameters_[4];
+  waste_rate = parameters_[5];
+  ref_coverage = parameters_[6];
+  trade_proportion = parameters_[7];
+  ref_demand = parameters_[8];
+  demand_change_rate = parameters_[9];
+  willingness_to_pay = parameters_[10];
+  price_change_rate = parameters_[11];
 }
 
 
 std::vector<double> BaseModel::derivatives(const std::vector<double>& states) {
- double S = states[0];
- double I = states[1];
- double D = states[2];
- double P = states[3];
+ double Sows = states[0];
+ double Pork = states[1];
+ double Demand = states[2];
+ double Price = states[3];
 
  derivatives_.clear();
 
- derivatives_.push_back(a*S*(P/b - 1) - e*S);
- derivatives_.push_back(f*g*S - w*I - D*I / (D*s + I) + k*(h - f*g*S));
- derivatives_.push_back(m*(h*q/P - D));
- derivatives_.push_back(r*P*(s*D/I - 1));
+ derivatives_.push_back(sow_replacement_rate*Sows*(Price/cost_of_production - 1) - sow_removal_rate*Sows);
+ derivatives_.push_back(
+   slaughter_rate*meat_per_pig*Sows - waste_rate*Pork -
+   Demand*Pork/(Demand*ref_coverage + Pork) + trade_proportion*(ref_demand - slaughter_rate*meat_per_pig*Sows));
+ derivatives_.push_back(demand_change_rate*(ref_demand*willingness_to_pay/Price - Demand));
+ derivatives_.push_back(price_change_rate*Price*(ref_coverage*Demand/Pork - 1));
 
  return derivatives_;
 }

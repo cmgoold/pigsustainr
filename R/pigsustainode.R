@@ -8,14 +8,18 @@
 #' @param parameters Vector of parameter values for the model
 #' @param times The simulation time steps. Should increment by the desired
 #'      dt interval
-#' @param backend Either "deSolve" or "cpp" (see details)
+#' @param backend Either "deSolve" or "cpp" (see details); defaults to "cpp"
 #'
 #' @returns An object of class of \code{PigSustainSim}
 #'
 #' @author Conor Goold \email{conor.goold@gmail.com}
 #' @export
 pigsustainode <- function(
-  model_name, initial_values, parameters, times, backend
+  model_name,
+  initial_values,
+  parameters,
+  times,
+  backend = "cpp"
   ){
 
     # validate the inputs
