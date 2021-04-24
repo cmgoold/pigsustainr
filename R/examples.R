@@ -20,7 +20,7 @@
   times <- seq(0, 52, 0.1)
   parameters <- c(
     sow_replacement_rate = 1/52,
-    cost_of_production = 120,
+    cost_of_production = 100,
     sow_removal_rate = 1/(2.5*52),
     slaughter_rate = 24/52,
     meat_per_pig = 110*0.75,
@@ -34,11 +34,20 @@
   )
   inits <- c(Sows = 400e3, Pork = 30e6, Demand = 30e6, Price = 140)
 
-  fit <- pigsustainode(
+  fit <- pigsustainr::pigsustainode(
     model_name="BaseModel",
     initial_values=inits,
     parameters=parameters,
     times=times,
     backend="cpp"
+  )
+
+  sens <- pigsustainr::pigsustainsens(
+    model_name="BaseModel",
+    initial_values=inits,
+    base_parameters=parameters,
+    times=times,
+    backend="cpp",
+    sensitivity_parameters="all"
   )
 }

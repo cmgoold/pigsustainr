@@ -15,8 +15,8 @@
 
 setClass("PigSustainSens",
   slots = c(
-    "simulation" = "PigSustainSim",
-    "sensitivity_matrix" = "numeric",
+    "model" = "character",
+    "sensitivity_matrix" = "data.frame",
     "summary_matrix" = "data.frame"
   )
 )

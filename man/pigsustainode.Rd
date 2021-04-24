@@ -4,7 +4,7 @@
 \alias{pigsustainode}
 \title{A function to fit \pkg{pigsustainr} ODE models}
 \usage{
-pigsustainode(model_name, initial_values, parameters, times, backend)
+pigsustainode(model_name, initial_values, parameters, times, backend = "cpp")
 }
 \arguments{
 \item{model_name}{The name of the model to simulate}
@@ -16,7 +16,7 @@ pigsustainode(model_name, initial_values, parameters, times, backend)
 \item{times}{The simulation time steps. Should increment by the desired
 dt interval}
 
-\item{backend}{Either "deSolve" or "cpp" (see details)}
+\item{backend}{Either "deSolve" or "cpp" (see details); defaults to "cpp"}
 }
 \value{
 An object of class of \code{PigSustainSim}
