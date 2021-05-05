@@ -38,13 +38,6 @@ pigsustainode <- function(
       )
     }
     else{
-      # deSolve model
-      # if(tolower(model_name) == "logisticgrowth"){
-      #   deSolve_model = .LogisticGrowth
-      # }
-      # if(tolower(model_name) == "basemodel"){
-      #   deSolve_model = .BaseModel
-      # }
       sim <- as.data.frame(deSolve::ode(
         func = get(paste0(".", model_name)),
         y = initial_values,

@@ -17,14 +17,15 @@ pigsustainsens <- function(
   base_parameters,
   times,
   backend = "cpp",
-  sensitivity_parameters,
-  perturb_prop = 0.01
+  sensitivity_parameters = NULL,
+  perturb_prop = 0.01,
+  n_sims = 1
 )
 {
 
   base_fit <- pigsustainode(model_name, initial_values, base_parameters, times, backend="cpp")
 
-  if(tolower(sensitivity_parameters)=="all")
+  if(is.null(sensitivity_parameters))
     sensitivity_parameters <- names(parameters(base_fit))
 
   M <- sum(names(parameters(base_fit)) %in% sensitivity_parameters)
@@ -55,14 +56,14 @@ pigsustainsens <- function(
   # summarise
   summary_matrix <- sensitivity_matrix %>%
     tidyr::pivot_longer(
-      -c("times", "states"),
+      -c("times", "states", "base"),
       names_to = "parameter",
       values_to = "sensitivity"
     ) %>%
     dplyr::group_by(parameter, states) %>%
     dplyr::summarise(
-      mean = mean(abs(solution)),
-      std = sd(abs(solution)),
+      mean = mean(abs(sensitivity)),
+      std = sd(abs(sensitivity)),
       .groups="drop"
     )
 

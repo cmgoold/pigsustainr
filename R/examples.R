@@ -48,6 +48,6 @@
     base_parameters=parameters,
     times=times,
     backend="cpp",
-    sensitivity_parameters="all"
+    sensitivity_parameters=NULL
   )
 }
