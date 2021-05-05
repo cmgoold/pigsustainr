@@ -25,25 +25,3 @@ setMethod("summary", "PigSustainSens",
   function(object){
     slot(object, "summary_matrix")
   })
-
-# setMethod("stateplot", "PigSustainSens",
-#   function(object){
-#     sensmat <- slot(object, "sensitivity_matrix")
-#     sensmat %>%
-#     pivot_longer(
-#       -times,
-#       names_to = "state",
-#       values_to = "solution"
-#     ) %>%
-#     mutate(
-#       state = factor(state, levels=unique(state))
-#     ) %>%
-#     ggplot2::ggplot() +
-#     ggplot2::geom_line(ggplot2::aes(times, solution), size=1) +
-#     ggplot2::facet_wrap(~state, scales="free_y") +
-#     ggplot2::theme(
-#       panel.grid=ggplot2::element_blank(),
-#       strip.text=ggplot2::element_text(size=15)
-#     )
-#   }
-# )
