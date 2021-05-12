@@ -46,7 +46,7 @@ pigsustainsens <- function(
       new_fit_results <- results(
         pigsustainode(model_name, initial_values, run_parameters, times, backend="cpp")
       )
-      (new_fit_results[,-1] - results(base_fit)[,-1])/(focal_par - perturb_par) * perturb_par/results(base_fit)[,-1]
+      (new_fit_results[,-1] - results(base_fit)[,-1])/(focal_par - perturb_par) * focal_par/results(base_fit)[,-1]
     },
     simplify=F
   )
@@ -56,7 +56,7 @@ pigsustainsens <- function(
   # summarise
   summary_matrix <- sensitivity_matrix %>%
     tidyr::pivot_longer(
-      -c("times", "states", "base"),
+      -c("times", "states"),
       names_to = "parameter",
       values_to = "sensitivity"
     ) %>%
