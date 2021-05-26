@@ -1,6 +1,22 @@
 
+run_example_model <- function(
+      model_name, 
+      backend="cpp"
+   ){
+    
+    if(tolower(model_name) == "logisticgrowth"){
+        fit <- .run_logistic_example(backend=backend)
+    }
+    if(tolower(model_name) == "basemodel"){
+        fit <- .run_base_model_example(backend=backend)
+    }
 
-.run_logistic_example <- function(){
+    return(fit)
+
+}
+
+
+.run_logistic_example <- function(backend){
   times <- seq(0, 10, 0.1)
   inits <- c(y=10)
   parameters <- c(r=0.1, k=100)
@@ -10,13 +26,13 @@
     initial_values=inits,
     parameters=parameters,
     times=times,
-    backend="cpp"
+    backend=backend
   )
 
   return(fit)
 }
 
-.run_base_model_example <- function(){
+.run_base_model_example <- function(backend){
   times <- seq(0, 52, 0.1)
   parameters <- c(
     sow_replacement_rate = 1/52,
@@ -34,20 +50,13 @@
   )
   inits <- c(Sows = 400e3, Pork = 30e6, Demand = 30e6, Price = 140)
 
-  fit <- pigsustainr::pigsustainode(
+  fit <- pigsustainode(
     model_name="BaseModel",
     initial_values=inits,
     parameters=parameters,
     times=times,
-    backend="cpp"
+    backend="backend"
   )
 
-  sens <- pigsustainr::pigsustainsens(
-    model_name="BaseModel",
-    initial_values=inits,
-    base_parameters=parameters,
-    times=times,
-    backend="cpp",
-    sensitivity_parameters=NULL
-  )
+  return(fit)
 }
