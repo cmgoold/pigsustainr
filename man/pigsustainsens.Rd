@@ -17,7 +17,8 @@ pigsustainsens(
 }
 \description{
 Local sensitivity is defined as the partial derivative of the state variables with respect
-to a change in a parameter. Although this is analytically tractable in many cases,
-we can approximate for any ODE model computationally, which is what the function
-below provides.
+to a change in a parameter. 
+We can approximate for any ODE model computationally, which is what the function
+below provides. The raw sensitivity value is multiplied by the ratio of the 
+parameter to the original solution, which normalises the sensitivity value.
 }

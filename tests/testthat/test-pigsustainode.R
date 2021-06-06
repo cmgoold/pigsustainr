@@ -25,6 +25,22 @@ testthat::test_that("integrate_ode and deSolve match",{
     fit_cpp@results[,2], fit_deSolve@results[,2],
     tolerance=1e-10
   )
-}
+})
 
-)
+testthat::test_that("basemodel using integrate_ode and deSolve match", {
+
+    fit_cpp <- run_example_model(
+        model_name="BaseModel", 
+        backend="cpp"
+        )
+
+    fit_desolve <- run_example_model(
+        model_name="BaseModel", 
+        backend="deSolve"
+        )
+
+    testthat::expect_equal(
+        results(fit_cpp)[,-1], results(fit_desolve)[,-1], 
+        tolerance=1e-5
+        )
+})
