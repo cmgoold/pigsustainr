@@ -36,10 +36,19 @@ run_example_model <- function(
   times <- seq(0, 52, 0.1)
   parameters <- c(
     sow_replacement_rate = 1/52,
-    cost_of_production = 100,
+    cost_of_production = 140,
     sow_removal_rate = 1/(2.5*52),
-    slaughter_rate = 24/52,
-    meat_per_pig = 110*0.75,
+    sow_service_rate = 2.4/52, 
+    farrowing_probability = 0.9, 
+    gestation_rate = 1/(114/7), 
+    litter_size = 12, 
+    pre_weaning_mortality = 0.16, 
+    weaning_rate = 1/4, 
+    growing_rate = 1/6, 
+    finishing_rate = 1/20, 
+    slaughter_rate = 1/3,
+    meat_per_pig = 110, 
+    killing_out_proportion=0.75,
     waste_rate = 0.3,
     ref_coverage = 1,
     trade_proportion = 0.6,
@@ -48,14 +57,20 @@ run_example_model <- function(
     willingness_to_pay = 150,
     price_change_rate = 1/20
   )
-  inits <- c(Sows = 400e3, Pork = 30e6, Demand = 30e6, Price = 140)
+
+  inits <- c(
+      Sows = 400e3, SowsInPig = 200e3, 
+      Piglets = 500e3, Weaners = 500e3, 
+      Growers = 2e6, Finishers=1e6, 
+      Pork = 30e6, Demand = 30e6, Price = 140
+  )
 
   fit <- pigsustainode(
     model_name="BaseModel",
     initial_values=inits,
     parameters=parameters,
     times=times,
-    backend="backend"
+    backend=backend
   )
 
   return(fit)

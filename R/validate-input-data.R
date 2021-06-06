@@ -30,7 +30,7 @@ ode_model_types <- c("LogisticGrowth", "BaseModel")
     n_states <- 1
   }
   if(tolower(model_name) == "basemodel"){
-    n_states <- 4
+    n_states <- 9
   }
   return(n_states)
 }
@@ -63,6 +63,11 @@ get_model_parameters <- function(model_name){
 logistic_parameter_names <- c("r", "k")
 base_model_parameter_names <- c(
   "sow_replacement_rate", "cost_of_production", "sow_removal_rate",
-  "slaughter_rate", "meat_per_pig", "waste_rate", "ref_coverage",
+  "sow_service_rate", "farrowing_probability", "gestation_rate", 
+  "litter_size", "pre_weaning_mortality", "weaning_rate", 
+  "growing_rate", "finishing_rate", "slaughter_rate",
+  "meat_per_pig", "killing_out_proportion", 
+  "waste_rate", "ref_coverage",
   "trade_proportion", "ref_demand", "demand_change_rate", "willingness_to_pay",
-  "price_change_rate")
+  "price_change_rate"
+)
