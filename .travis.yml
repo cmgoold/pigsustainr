@@ -2,6 +2,16 @@ language: r
 cache: packages
 warnings_are_errors: false
 
+matrix:
+  include:
+    - os: osx
+      osx_image: xcode8
+      env:
+        - MATRIX_EVAL="brew install gcc5 && CC=gcc-5 && CXX=g++-5"
+
+before_install:
+    - eval "${MATRIX_EVAL}"
+
 notifications:
   email:
     on_success: change
