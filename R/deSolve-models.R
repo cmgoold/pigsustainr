@@ -16,7 +16,7 @@
 
     return(list(c(
 
-      dSows_dt <- sow_replacement_rate * Sows * (Price/cost_of_production - 1) - sow_removal_rate * Sows,
+      dSows_dt <- sow_growth_rate * Sows * (Price/cost_of_production - 1) - sow_death_rate * Sows,
       dSowsInPig_dt <- sow_service_rate*Sows - farrowing_probability*gestation_rate*SowsInPig - (1 - farrowing_probability)*gestation_rate*SowsInPig, 
 
       dPiglets_dt <- litter_size*farrowing_probability*gestation_rate*SowsInPig - pre_weaning_mortality*weaning_rate*Piglets - 

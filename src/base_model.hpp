@@ -16,9 +16,9 @@ class BaseModel : public Model {
 
     // member variables
     private:
-      double sow_replacement_rate;
+      double sow_growth_rate;
       double cost_of_production;
-      double sow_removal_rate;
+      double sow_death_rate;
       double sow_service_rate;
       double farrowing_probability;
       double gestation_rate;

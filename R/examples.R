@@ -35,9 +35,9 @@ run_example_model <- function(
 .run_base_model_example <- function(backend){
   times <- seq(0, 52, 0.1)
   parameters <- c(
-    sow_replacement_rate = 1/52,
+    sow_growth_rate = 1/52,
     cost_of_production = 140,
-    sow_removal_rate = 1/(2.5*52),
+    sow_death_rate = 1/(2.5*52),
     sow_service_rate = 2.4/52, 
     farrowing_probability = 0.9, 
     gestation_rate = 1/(114/7), 

@@ -62,7 +62,7 @@ get_model_parameters <- function(model_name){
 
 logistic_parameter_names <- c("r", "k")
 base_model_parameter_names <- c(
-  "sow_replacement_rate", "cost_of_production", "sow_removal_rate",
+  "sow_growth_rate", "cost_of_production", "sow_death_rate",
   "sow_service_rate", "farrowing_probability", "gestation_rate", 
   "litter_size", "pre_weaning_mortality", "weaning_rate", 
   "growing_rate", "finishing_rate", "slaughter_rate",

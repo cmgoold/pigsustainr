@@ -12,9 +12,9 @@ BaseModel::BaseModel(const std::vector<double>& parameters) : Model(parameters) 
 }
 
 void BaseModel::resolve_parameters(){
-  sow_replacement_rate = parameters_[0];
+  sow_growth_rate = parameters_[0];
   cost_of_production = parameters_[1];
-  sow_removal_rate = parameters_[2];
+  sow_death_rate = parameters_[2];
   sow_service_rate = parameters_[3];
   farrowing_probability = parameters_[4];
   gestation_rate = parameters_[5];
@@ -50,9 +50,9 @@ std::vector<double> BaseModel::derivatives(const std::vector<double>& states) {
  derivatives_.clear();
 
  // sow herd dynamics
- double sow_replacements = sow_replacement_rate*Sows*(Price/cost_of_production - 1);
- double sow_removals = sow_removal_rate*Sows;
- derivatives_.push_back(sow_replacements - sow_removals);
+ double sow_adjustment = sow_growth_rate*Sows*(Price/cost_of_production - 1);
+ double sow_removals = sow_death_rate*Sows;
+ derivatives_.push_back(sow_adjustment - sow_removals);
 
  // sow breeding dynamics
  double sow_services = sow_service_rate*Sows;
