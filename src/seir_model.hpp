@@ -1,18 +1,19 @@
-/* The base PigSustain model definition
+/* 
+ * Definition of an SEIR model 
  */
 
-#ifndef PIGSUSTAINSIMULATOR_CODE_CPP_BASEMODEL_
-#define PIGSUSTAINSIMULATOR_CODE_CPP_BASEMODEL_
+#ifndef PIGSUSTAINSIMULATOR_CODE_CPP_SEIR_
+#define PIGSUSTAINSIMULATOR_CODE_CPP_SEIR_
 
 #include "model.hpp"
 #include<vector>
 
-class BaseModel : public Model {
+class SEIR : public Model {
 
     // constructors
     public:
-      BaseModel();
-      BaseModel(const std::vector<double>& parameters);
+      SEIR();
+      SEIR (const std::vector<double>& parameters);
 
     // member variables
     private:
@@ -20,7 +21,7 @@ class BaseModel : public Model {
       double cost_of_production;
       double sow_removal_rate;
       double sow_service_rate;
-      double farrowing_probability;
+      double abortion;
       double gestation_rate;
       double litter_size;
       double pre_weaning_mortality;
@@ -37,13 +38,23 @@ class BaseModel : public Model {
       double demand_change_rate;
       double willingness_to_pay;
       double price_change_rate;
+      double infection_rate;
+      double infected_cull_rate;
+      double disease_start_time;
+      double infected_death_rate;
+      double intervention_efficacy;
+      double intervention_midpoint;
+      double intervention_growth_rate;
+      double exposed_infectious;
+      bool trade_drop;
+      bool exports_on;
 
     // member functions
     private:
       void resolve_parameters();
     public:
       std::vector<double> derivatives(const std::vector<double>& states, const int& t) override;
-
+      double intervention_growth(const int& t, const double& max, const double& midpoint, const double& growth_rate);
 };
 
 #endif

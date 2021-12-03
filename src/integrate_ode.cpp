@@ -7,6 +7,7 @@
 #include "model.hpp"
 #include "logistic_growth.hpp"
 #include "base_model.hpp"
+#include "seir_model.hpp"
 #include <vector>
 #include <iostream>
 #include <string>
@@ -58,6 +59,19 @@ Rcpp::DataFrame integrate_ode(
          );
    }
 
+   if(model_name=="SEIR"){
+     model = std::make_unique<SEIR>(parameters);
+     colnames(out) = Rcpp::CharacterVector::create(
+             "times", 
+             "SowsSusceptible", "SowsExposed", "SowsInfected", "SowsInPig", 
+             "PigletsSusceptible", "PigletsExposed", "PigletsInfectious", 
+             "WeanersSusceptible", "WeanersExposed", "WeanersInfected", 
+             "GrowersSusceptible", "GrowersExposed", "GrowersInfected", 
+             "FinishersSusceptible", "FinishersExposed", "FinishersInfected", 
+             "Pork", "Demand", "Price"
+         );
+   }
+
    // integration instance initialised
    RK4 solve(dt, std::move(model), initial_values);
 
@@ -67,7 +81,7 @@ Rcpp::DataFrame integrate_ode(
      out(tt+1, 0) = (tt+1) * dt;
 
      // solve
-     std::vector<double> sol = solve.integrate();
+     std::vector<double> sol = solve.integrate(tt);
 
      // add to state vectors
      for(size_t i = 0; i < sol.size(); ++i){

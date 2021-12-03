@@ -12,7 +12,7 @@ Model::Model(const std::vector<double>& parameters){
   parameters_ = parameters;
 }
 
-std::vector<double> Model::derivatives(const std::vector<double>& states){
+std::vector<double> Model::derivatives(const std::vector<double>& states, const int& t){
   std::cout << "In Model's derivatives function" << std::endl;
   return derivatives_;
 }

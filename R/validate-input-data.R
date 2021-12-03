@@ -5,7 +5,7 @@ validate_pigsustainode_data <- function(model_name, initial_values, parameters){
 }
 
 # possible model types
-ode_model_types <- c("LogisticGrowth", "BaseModel")
+ode_model_types <- c("LogisticGrowth", "BaseModel", "SEIR")
 
 # validate initial values for state variables
 # @param model name The name of the model
@@ -16,6 +16,9 @@ ode_model_types <- c("LogisticGrowth", "BaseModel")
   }
   if(tolower(model_name) == "basemodel"){
     n_states <- match(length(initial_values), .n_model_states(model_name))
+  }
+  if(tolower(model_name) == "seir"){
+      n_states <- match(length(initial_values), .n_model_states(model_name))
   }
   if(is.na(n_states)){
     stop("Initial values do not have the correct number of values!")
@@ -32,6 +35,8 @@ ode_model_types <- c("LogisticGrowth", "BaseModel")
   if(tolower(model_name) == "basemodel"){
     n_states <- 9
   }
+  if(tolower(model_name) == "seir")
+      n_states <- 19
   return(n_states)
 }
 
@@ -43,6 +48,10 @@ ode_model_types <- c("LogisticGrowth", "BaseModel")
   if(tolower(model_name) == "basemodel"){
     valid_names = all(names(parameters) == base_model_parameter_names)
     valid_length = (length(names(parameters)) == length(base_model_parameter_names))
+  }
+  if(tolower(model_name) == "seir"){
+      valid_names = all(names(parameters) == seir_model_parameter_names)
+      valid_length = (length(names(parameters)) == length(seir_model_parameter_names))
   }
 
   if(!valid_names){
@@ -58,6 +67,8 @@ get_model_parameters <- function(model_name){
     return(logistic_parameter_names)
   if(tolower(model_name=="base_model_parameter_names"))
     return(base_model_parameter_names)
+  if(tolower(model_name=="seir_model_parameter_names"))
+    return(seir_model_parameter_names)
 }
 
 logistic_parameter_names <- c("r", "k")
@@ -70,4 +81,21 @@ base_model_parameter_names <- c(
   "waste_rate", "ref_coverage",
   "trade_proportion", "ref_demand", "demand_change_rate", "willingness_to_pay",
   "price_change_rate"
+)
+seir_model_parameter_names <- c(
+    "replace", "costs_of_production", "remove",
+    "infection_rate", 'disease_start_time', "infected_death_rate",
+    "intervention_efficacy", 
+    "intervention_growth_rate", 
+    "intervention_midpoint",  
+    "kill_rate", 
+    "exposed_infectious",
+    "service", "abortion", "gestation",
+    "n", "pre_weaning_mortality", "wean",
+    "grow", "finish", "slaughter",
+    "meat_per_pig", "killing_out_proportion",
+    "coverage", "trade_drop",
+    "ref_demand", "waste",
+    "demand_change", "willingness_to_pay",
+    "price_change", "exports_on"
 )

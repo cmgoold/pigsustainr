@@ -23,7 +23,7 @@ class LogisticGrowth : public Model
       void resolve_parameters();
 
     public:
-      std::vector<double> derivatives(const std::vector<double>& states) override;
+      std::vector<double> derivatives(const std::vector<double>& states, const int& t) override;
 };
 
 #endif

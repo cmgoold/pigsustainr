@@ -18,7 +18,7 @@ void LogisticGrowth::resolve_parameters(){
   k = parameters_[1];
 }
 
-std::vector<double> LogisticGrowth::derivatives(const std::vector<double>& states) {
+std::vector<double> LogisticGrowth::derivatives(const std::vector<double>& states, const int& t) {
   double y = states[0];
   derivatives_.clear();
   derivatives_.push_back(r * y * (1 - y/k));
