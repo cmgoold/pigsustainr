@@ -64,7 +64,7 @@ Rcpp::DataFrame integrate_ode(
      colnames(out) = Rcpp::CharacterVector::create(
              "times", 
              "SowsSusceptible", "SowsExposed", "SowsInfected", "SowsInPig", 
-             "PigletsSusceptible", "PigletsExposed", "PigletsInfectious", 
+             "PigletsSusceptible", "PigletsExposed", "PigletsInfected", 
              "WeanersSusceptible", "WeanersExposed", "WeanersInfected", 
              "GrowersSusceptible", "GrowersExposed", "GrowersInfected", 
              "FinishersSusceptible", "FinishersExposed", "FinishersInfected", 
@@ -78,14 +78,14 @@ Rcpp::DataFrame integrate_ode(
    // integrate
    for(int tt = 0; tt < (n_sim_t-1); ++tt){
 
-     out(tt+1, 0) = (tt+1) * dt;
+     out(tt + 1, 0) = times[tt + 1];
 
      // solve
-     std::vector<double> sol = solve.integrate(tt);
+     std::vector<double> sol = solve.integrate(times[tt]);
 
      // add to state vectors
      for(size_t i = 0; i < sol.size(); ++i){
-       out(tt+1, i+1) = sol[i];
+       out(tt + 1, i+1) = sol[i];
      }
    }//tt
 

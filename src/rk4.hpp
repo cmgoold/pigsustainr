@@ -25,7 +25,7 @@ class RK4{
 
      public:
        // integrate the model
-       std::vector<double> integrate(const int& t);
+       std::vector<double> integrate(const double& t);
 };
 
 #endif

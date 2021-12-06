@@ -36,7 +36,7 @@ void BaseModel::resolve_parameters(){
 }
 
 
-std::vector<double> BaseModel::derivatives(const std::vector<double>& states, const int& t) {
+std::vector<double> BaseModel::derivatives(const std::vector<double>& states, const double& t) {
  double Sows = states[0];
  double SowsInPig = states[1];
  double Piglets = states[2];

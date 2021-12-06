@@ -35,8 +35,9 @@ ode_model_types <- c("LogisticGrowth", "BaseModel", "SEIR")
   if(tolower(model_name) == "basemodel"){
     n_states <- 9
   }
-  if(tolower(model_name) == "seir")
+  if(tolower(model_name) == "seir"){
       n_states <- 19
+  }
   return(n_states)
 }
 
@@ -83,19 +84,34 @@ base_model_parameter_names <- c(
   "price_change_rate"
 )
 seir_model_parameter_names <- c(
-    "replace", "costs_of_production", "remove",
-    "infection_rate", 'disease_start_time', "infected_death_rate",
-    "intervention_efficacy", 
-    "intervention_growth_rate", 
-    "intervention_midpoint",  
-    "kill_rate", 
-    "exposed_infectious",
-    "service", "abortion", "gestation",
-    "n", "pre_weaning_mortality", "wean",
-    "grow", "finish", "slaughter",
-    "meat_per_pig", "killing_out_proportion",
-    "coverage", "trade_drop",
-    "ref_demand", "waste",
-    "demand_change", "willingness_to_pay",
-    "price_change", "exports_on"
+      "replace",
+      "costs_of_production", 
+      "remove",
+      "service", 
+      "abortion", 
+      "gestation",
+      "n", 
+      "pre_weaning_mortality", 
+      "wean",
+      "grow", 
+      "finish", 
+      "slaughter",
+      "meat_per_pig", 
+      "killing_out_proportion",
+      "waste",
+      "coverage",
+      "trade_proportion",
+      "ref_demand",
+      "demand_change", 
+      "willingness_to_pay", 
+      "price_change", 
+      "infection_rate", 
+      "disease_start_time", 
+      "infected_death_rate", 
+      "intervention_efficacy",
+      "intervention_midpoint", 
+      "intervention_growth_rate", 
+      "exposed_infectious", 
+      "trade_drop", 
+      "exports_on"
 )

@@ -42,7 +42,7 @@ class BaseModel : public Model {
     private:
       void resolve_parameters();
     public:
-      std::vector<double> derivatives(const std::vector<double>& states, const int& t) override;
+      std::vector<double> derivatives(const std::vector<double>& states, const double& t) override;
 
 };
 

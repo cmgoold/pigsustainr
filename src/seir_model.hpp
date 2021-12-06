@@ -39,7 +39,6 @@ class SEIR : public Model {
       double willingness_to_pay;
       double price_change_rate;
       double infection_rate;
-      double infected_cull_rate;
       double disease_start_time;
       double infected_death_rate;
       double intervention_efficacy;
@@ -53,8 +52,8 @@ class SEIR : public Model {
     private:
       void resolve_parameters();
     public:
-      std::vector<double> derivatives(const std::vector<double>& states, const int& t) override;
-      double intervention_growth(const int& t, const double& max, const double& midpoint, const double& growth_rate);
+      std::vector<double> derivatives(const std::vector<double>& states, const double& t) override;
+      double intervention_growth(const double& t, const double& max, const double& midpoint, const double& growth_rate);
 };
 
 #endif

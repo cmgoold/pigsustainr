@@ -35,23 +35,22 @@ void SEIR::resolve_parameters(){
   willingness_to_pay = parameters_[19];
   price_change_rate = parameters_[20];
   infection_rate = parameters_[21];
-  infected_cull_rate = parameters_[22];
-  disease_start_time = parameters_[23];
-  infected_death_rate = parameters_[24];
-  intervention_efficacy = parameters_[25];
-  intervention_midpoint = parameters_[26];
-  intervention_growth_rate = parameters_[27];
-  exposed_infectious = parameters_[28];
-  trade_drop = parameters_[29];
-  exports_on = parameters_[30];
+  disease_start_time = parameters_[22];
+  infected_death_rate = parameters_[23];
+  intervention_efficacy = parameters_[24];
+  intervention_midpoint = parameters_[25];
+  intervention_growth_rate = parameters_[26];
+  exposed_infectious = parameters_[27];
+  trade_drop = parameters_[28];
+  exports_on = parameters_[29];
 }
 
-double SEIR::intervention_growth(const int& t, const double& max, const double& midpoint, const double& growth_rate){
+double SEIR::intervention_growth(const double& t, const double& max, const double& midpoint, const double& growth_rate){
     double intervention_ = max / (1 + exp(-growth_rate * (t - midpoint)));
     return intervention_;
 }
 
-std::vector<double> SEIR::derivatives(const std::vector<double>& states, const int& t) {
+std::vector<double> SEIR::derivatives(const std::vector<double>& states, const double& t) {
  double SowsSusceptible = states[0];
  double SowsExposed = states[1];
  double SowsInfected = states[2];
@@ -75,7 +74,7 @@ std::vector<double> SEIR::derivatives(const std::vector<double>& states, const i
  derivatives_.clear();
 
  // total pig numbers
- double total_sows = SowsSusceptible + SowsExposed + SowsInfected;
+ double total_sows = SowsSusceptible + SowsExposed + SowsInfected; 
  double total_piglets = PigletsSusceptible + PigletsExposed + PigletsInfected;
  double total_weaners = WeanersSusceptible + WeanersExposed + WeanersInfected;
  double total_growers = GrowersSusceptible + GrowersExposed + GrowersInfected;
@@ -88,11 +87,6 @@ std::vector<double> SEIR::derivatives(const std::vector<double>& states, const i
  if(disease_start_time > 0 && t >= disease_start_time)
      intervention = intervention_growth(t, intervention_efficacy, intervention_midpoint, intervention_growth_rate);
 
- //disease start indicator
- int disease_start = 0;
- if(t == disease_start_time)
-     disease_start = 1;
-
  // forces of infection
  double lambda = (1 - intervention) * infection_rate;
  double beta_sows = lambda * SowsInfected / total_sows;
@@ -100,6 +94,10 @@ std::vector<double> SEIR::derivatives(const std::vector<double>& states, const i
  double beta_weaners = lambda * WeanersInfected / total_weaners;
  double beta_growers = lambda * GrowersInfected / total_growers;
  double beta_finishers = lambda * FinishersInfected / total_finishers;
+
+ // disease start pig 
+ int disease_start = 0;
+ if(t == disease_start_time) disease_start = 1;
 
  /* sow breeding dynamics */
  // Susceptible sows
@@ -125,13 +123,13 @@ std::vector<double> SEIR::derivatives(const std::vector<double>& states, const i
 
  /* Piglets */
  //Susceptible piglets
- double piglet_births = litter_size * (1 - abortion) * SowsInPig;
- double piglets_weaning = (1 - pre_weaning_mortality) * weaning_rate * PigletsSusceptible;
+ double piglet_births = litter_size * (1 - abortion) * sows_ending_term;
+ double piglets_weaning = weaning_rate * PigletsSusceptible;
  double piglets_exposed = beta_piglets * PigletsSusceptible;
  derivatives_.push_back(piglet_births - piglets_weaning - piglets_exposed);
 
  // Exposed piglets
- double piglets_exposed_weaning = (1 - intervention) * (1 - pre_weaning_mortality) * weaning_rate * PigletsExposed;
+ double piglets_exposed_weaning = (1 - intervention) * weaning_rate * PigletsExposed;
  double piglets_exposed_infectious = exposed_infectious * PigletsExposed;
  derivatives_.push_back(piglets_exposed - piglets_exposed_weaning - piglets_exposed_infectious);
 
@@ -141,11 +139,13 @@ std::vector<double> SEIR::derivatives(const std::vector<double>& states, const i
 
  /* Weaners */
  // Susceptible weaners
- double weaners_growing = growing_rate*WeanersSusceptible;
+ piglets_weaning *= (1 - pre_weaning_mortality);
+ double weaners_growing = growing_rate * WeanersSusceptible;
  double weaners_exposed = beta_weaners * WeanersSusceptible;
  derivatives_.push_back(piglets_weaning - weaners_growing - weaners_exposed);
 
  // Exposed weaners
+ piglets_exposed_weaning *= (1 - pre_weaning_mortality);
  double weaners_exposed_infectious = exposed_infectious * WeanersExposed;
  double weaners_exposed_growing = (1 - intervention) * growing_rate * WeanersExposed;
  derivatives_.push_back(weaners_exposed + piglets_exposed_weaning 
@@ -186,21 +186,20 @@ std::vector<double> SEIR::derivatives(const std::vector<double>& states, const i
  derivatives_.push_back(finishers_exposed_infectious - finishers_infected_death);
 
  // pork inventory dynamics
- double trade_value = trade_proportion;
- if(trade_drop)
-     trade_value *= (1 + SowsInfected/total_sows);
-
-
  double slaughter_pigs = finishers_slaughtered + finishers_exposed_slaughtered;
  double domestic_production = slaughter_pigs*meat_per_pig*killing_out_proportion;
  double waste_pork = waste_rate*Pork;
  double consumption = Demand*Pork*1/(Demand*ref_coverage + Pork);
+ 
+ double trade_value = trade_proportion;
+ if(trade_drop)
+     trade_value *= (1 + SowsInfected/total_sows);
+
+ double imports = trade_value * ref_demand;
 
  double exports = trade_value * domestic_production;
  if(!exports_on && t > disease_start_time)
      exports = 0;
-
- double imports = trade_value * ref_demand;
 
  derivatives_.push_back(domestic_production - waste_pork - consumption + imports - exports);
 

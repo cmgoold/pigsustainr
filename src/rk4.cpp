@@ -13,7 +13,7 @@ RK4::RK4(const double& dt, std::unique_ptr<Model> model, const std::vector<doubl
   states_ = initial_states;
 }
 
-std::vector<double> RK4::integrate(const int& t){
+std::vector<double> RK4::integrate(const double& t){
 
   std::vector<double> K1;
   std::vector<double> K2;
@@ -24,47 +24,50 @@ std::vector<double> RK4::integrate(const int& t){
   //constants
   double constant = 1.0/6.0;
   double one_half_ = 0.5;
+  double t_ = t;
 
   // step 1
-  std::vector<double> step_k_1_ = model_->derivatives(states_, t);
+  std::vector<double> step_k_1_ = model_->derivatives(states_, t_);
   for(int k = 0; k < n_states_; ++k){
-    K1.push_back(step_k_1_[k] * dt_);
+    K1.push_back(dt_ * step_k_1_[k]);
   }
 
   // step 2
   std::vector<double> step_2_states_;
+  t_ = t + one_half_ * dt_;
   for(int k = 0; k < n_states_; ++k){
-    step_2_states_.push_back(states_[k] + K1[k] * one_half_ );
+    step_2_states_.push_back(states_[k] + K1[k] * one_half_);
   }
-  std::vector<double> step_k_2_ = model_->derivatives(step_2_states_, t);
+  std::vector<double> step_k_2_ = model_->derivatives(step_2_states_, t_);
   for(int k = 0; k < n_states_; ++k){
-    K2.push_back(step_k_2_[k] * dt_);
+    K2.push_back(dt_ * step_k_2_[k]);
   }
 
   // step 3
   std::vector<double> step_3_states_;
   for(int k = 0; k < n_states_; ++k){
-    step_3_states_.push_back(states_[k] + K2[k] * one_half_ );
+    step_3_states_.push_back(states_[k] + K2[k] * one_half_);
   }
-  std::vector<double> step_k_3_ = model_->derivatives(step_3_states_, t);
+  std::vector<double> step_k_3_ = model_->derivatives(step_3_states_, t_);
   for(int k = 0; k < n_states_; ++k){
-    K3.push_back(step_k_3_[k] * dt_);
+    K3.push_back(dt_ * step_k_3_[k]);
   }
 
   // step 4
   std::vector<double> step_4_states_;
+  t_ = t + dt_;
   for(int k = 0; k < n_states_; ++k){
     step_4_states_.push_back(states_[k] + K3[k]);
   }
-  std::vector<double> step_k_4_ = model_->derivatives(step_4_states_, t);
+  std::vector<double> step_k_4_ = model_->derivatives(step_4_states_, t_);
   for(int k = 0; k < n_states_; ++k){
-    K4.push_back(step_k_4_[k] * dt_);
+    K4.push_back(dt_ * step_k_4_[k]);
   }
 
   // update states
   std::vector<double> new_states_;
   for(int k = 0; k < n_states_; ++k){
-    new_states_.push_back(states_[k] + constant * (K1[k] + (K2[k] + K3[k]) * 1/one_half_ + K4[k] ) );
+    new_states_.push_back(states_[k] + constant * (K1[k] + (K2[k] + K3[k]) * 1/one_half_ + K4[k]));
   }
 
   states_ = new_states_;
