@@ -5,6 +5,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // integrate_ode
 Rcpp::DataFrame integrate_ode(std::string& model_name, const std::vector<double>& initial_values, const std::vector<double>& parameters, const std::vector<double>& times);
 RcppExport SEXP _pigsustainr_integrate_ode(SEXP model_nameSEXP, SEXP initial_valuesSEXP, SEXP parametersSEXP, SEXP timesSEXP) {

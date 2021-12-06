@@ -19,7 +19,7 @@ class Model
 
     public:
         void show_parameters();
-        virtual std::vector<double> derivatives(const std::vector<double>& states);
+        virtual std::vector<double> derivatives(const std::vector<double>& states, const double& t);
 };
 
 #endif

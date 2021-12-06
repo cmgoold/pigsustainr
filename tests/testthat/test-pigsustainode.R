@@ -44,3 +44,21 @@ testthat::test_that("basemodel using integrate_ode and deSolve match", {
         tolerance=1e-5
         )
 })
+
+testthat::test_that("seir using integrate_ode and deSolve match", {
+
+    fit_cpp <- run_example_model(
+        model_name="SEIR", 
+        backend="cpp"
+        )
+
+    fit_desolve <- run_example_model(
+        model_name="SEIR", 
+        backend="deSolve"
+        )
+
+    testthat::expect_equal(
+        results(fit_cpp)[,-1], results(fit_desolve)[,-1], 
+        tolerance=1e-2
+        )
+})
