@@ -142,7 +142,7 @@ std::vector<double> SEIR::derivatives(const std::vector<double>& states, const d
  piglets_weaning *= (1 - pre_weaning_mortality);
  double weaners_growing = growing_rate * WeanersSusceptible;
  double weaners_exposed = beta_weaners * WeanersSusceptible;
- derivatives_.push_back(piglets_weaning - weaners_growing - weaners_exposed);
+ derivatives_.push_back(piglets_weaning - weaners_growing - weaners_exposed + disease_start);
 
  // Exposed weaners
  piglets_exposed_weaning *= (1 - pre_weaning_mortality);
@@ -193,7 +193,7 @@ std::vector<double> SEIR::derivatives(const std::vector<double>& states, const d
  
  double trade_value = trade_proportion;
  if(trade_drop)
-     trade_value *= (1 + SowsInfected/total_sows);
+     trade_value *= (1 + total_infected/total_pigs);
 
  double imports = trade_value * ref_demand;
 

@@ -80,7 +80,7 @@ intervention_growth <- function(t, max, mid_point, growth) max/(1 + exp(-growth 
     # Weaners
     dWeanersSusceptible_dt <- (1 - pre_weaning_mortality)*wean*PigletsSusceptible - grow*WeanersSusceptible - beta_weaners*WeanersSusceptible 
     dWeanersExposed_dt <- beta_weaners*WeanersSusceptible + (1 - intervention)*(1 - pre_weaning_mortality)*wean*PigletsExposed - 
-      (1 - intervention)*grow*WeanersExposed - exposed_infectious*WeanersExposed 
+      (1 - intervention)*grow*WeanersExposed - exposed_infectious*WeanersExposed + disease_start
     dWeanersInfected_dt <- exposed_infectious*WeanersExposed - infected_death_rate*WeanersInfected 
     
     #Growers
@@ -100,7 +100,7 @@ intervention_growth <- function(t, max, mid_point, growth) max/(1 + exp(-growth 
     consumption <- Demand*Pork*1/(Demand*coverage + Pork)
     
     if (trade_drop)
-      trade <- trade_proportion*(1+SowsInfected/total_sows)
+      trade <- trade_proportion*(1+total_infected/total_pigs)
     else
       trade <- trade_proportion
     
