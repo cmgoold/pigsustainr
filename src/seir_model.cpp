@@ -142,14 +142,14 @@ std::vector<double> SEIR::derivatives(const std::vector<double>& states, const d
  piglets_weaning *= (1 - pre_weaning_mortality);
  double weaners_growing = growing_rate * WeanersSusceptible;
  double weaners_exposed = beta_weaners * WeanersSusceptible;
- derivatives_.push_back(piglets_weaning - weaners_growing - weaners_exposed + disease_start);
+ derivatives_.push_back(piglets_weaning - weaners_growing - weaners_exposed);
 
  // Exposed weaners
  piglets_exposed_weaning *= (1 - pre_weaning_mortality);
  double weaners_exposed_infectious = exposed_infectious * WeanersExposed;
  double weaners_exposed_growing = (1 - intervention) * growing_rate * WeanersExposed;
  derivatives_.push_back(weaners_exposed + piglets_exposed_weaning 
-         - weaners_exposed_infectious - weaners_exposed_growing);
+         - weaners_exposed_infectious - weaners_exposed_growing + disease_start);
 
  // Infected weaners
  double weaners_infected_death = infected_death_rate * WeanersInfected;
