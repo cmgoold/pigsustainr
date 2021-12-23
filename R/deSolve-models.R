@@ -74,13 +74,13 @@ intervention_growth <- function(t, max, mid_point, growth) max/(1 + exp(-growth 
     
     # Piglets
     dPigletsSusceptible_dt <- n*(1 - abortion)*gestation*SowsInPig - wean*PigletsSusceptible - beta_piglets*PigletsSusceptible
-    dPigletsExposed_dt <- beta_piglets*PigletsSusceptible - (1 - intervention)*wean*PigletsExposed - exposed_infectious*PigletsExposed 
+    dPigletsExposed_dt <- beta_piglets*PigletsSusceptible - (1 - intervention)*wean*PigletsExposed - exposed_infectious*PigletsExposed + disease_start
     dPigletsInfected_dt <- exposed_infectious*PigletsExposed - infected_death_rate*PigletsInfected 
     
     # Weaners
     dWeanersSusceptible_dt <- (1 - pre_weaning_mortality)*wean*PigletsSusceptible - grow*WeanersSusceptible - beta_weaners*WeanersSusceptible 
     dWeanersExposed_dt <- beta_weaners*WeanersSusceptible + (1 - intervention)*(1 - pre_weaning_mortality)*wean*PigletsExposed - 
-      (1 - intervention)*grow*WeanersExposed - exposed_infectious*WeanersExposed + disease_start
+      (1 - intervention)*grow*WeanersExposed - exposed_infectious*WeanersExposed 
     dWeanersInfected_dt <- exposed_infectious*WeanersExposed - infected_death_rate*WeanersInfected 
     
     #Growers
